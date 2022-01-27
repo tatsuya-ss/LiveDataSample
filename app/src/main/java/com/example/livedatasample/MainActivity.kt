@@ -2,9 +2,7 @@ package com.example.livedatasample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.example.livedatasample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -37,19 +35,6 @@ class MainActivity : AppCompatActivity() {
     private fun  setupBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
-}
-
-class NumberViewModel: ViewModel() {
-    private var currentNumber = 0
-
-    val number: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>()
-    }
-
-    fun didTapCountUpButton() {
-        currentNumber += 1
-        number.value = currentNumber
     }
 
 }
