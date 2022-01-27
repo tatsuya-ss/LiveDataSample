@@ -10,8 +10,7 @@ import com.example.livedatasample.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val model = NameViewModel()
-    private var number = 0
+    private val numberViewModel = NumberViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupButton() {
         binding.countUpButton.setOnClickListener {
-            number += 1
-            model.number.value = number
+            numberViewModel.didTapCountUpButton()
         }
     }
 
@@ -33,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         val nameObserver = Observer<Int> { newName ->
             binding.numberText.text = newName.toString()
         }
-        model.number.observe(this, nameObserver)
+        numberViewModel.number.observe(this, nameObserver)
     }
 
     private fun  setupBinding() {
@@ -42,10 +40,16 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class NameViewModel: ViewModel() {
+class NumberViewModel: ViewModel() {
+    private var currentNumber = 0
 
     val number: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
+    }
+
+    fun didTapCountUpButton() {
+        currentNumber += 1
+        number.value = currentNumber
     }
 
 }
