@@ -2,39 +2,29 @@ package com.example.livedatasample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.livedatasample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
     private val numberViewModel = NumberViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupBinding()
-        setupLiveData()
-        setupButton()
+        setupDataBinding()
 
     }
 
-    private fun setupButton() {
-        binding.countUpButton.setOnClickListener {
-            numberViewModel.didTapCountUpButton()
+    private fun setupDataBinding() {
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
+            this, R.layout.activity_main
+        ).apply {
+            // これでLiveDataが正しく動く
+            setLifecycleOwner(this@MainActivity)
         }
-    }
-
-    private fun setupLiveData() {
-        val nameObserver = Observer<Int> { newName ->
-            binding.numberText.text = newName.toString()
-        }
-        numberViewModel.number.observe(this, nameObserver)
-    }
-
-    private fun  setupBinding() {
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding.numberViewModel = this.numberViewModel
     }
 
 }

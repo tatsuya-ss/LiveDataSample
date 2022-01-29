@@ -8,7 +8,7 @@ class NumberViewModel: ViewModel() {
     private val countUp = CountUp()
 
     val number: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>()
+        MutableLiveData<Int>(0)
     }
 
     fun didTapCountUpButton() {
